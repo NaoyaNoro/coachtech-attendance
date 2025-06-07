@@ -1,0 +1,159 @@
+body {
+    background-color: #F0EFF2;
+    margin: 0;
+}
+
+
+.detail__content {
+    margin: 10px auto;
+    max-width: 1400px;
+}
+
+.detail__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.detail__ttl {
+    width: 100%;
+}
+
+h2 {
+    font-size: 30px;
+    text-align: left;
+    border-left: #000000 solid 5px;
+    padding-left: 10px;
+}
+
+.correct__attendance{
+    width: 100%;
+}
+
+
+.detail__table{
+    background-color: #FFFFFF;
+    margin: 40px auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    border-radius: 10px;
+    table-layout: fixed;
+}
+
+.detail__table tr {
+    border-bottom: #F0EFF2 solid 2px;
+    width: 100%;
+}
+
+.detail__table th {
+    color: #737373;
+    width: 30%;
+    text-align: left;
+    padding-left: 40px;
+}
+
+.td__first, .td__second, .td__third{
+    color: #000000;
+    padding: 30px 0;
+    text-align: center;
+    width: 13%;
+}
+
+.td__empty{
+    width: 30%;
+}
+
+
+.detail__table input{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #E1E1E1;
+    border-radius: 3px;
+
+}
+
+.detail__table textarea{
+    width: 100%;
+    border: 1px solid #E1E1E1;
+    border-radius: 3px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.correct__button{
+    background-color: #000000;
+    color: #FFFFFF;
+    width: 110px;
+    height: 50px;
+    text-align: center;
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    font-size: 22px;
+}
+
+.approve{
+    background-color: #696969;
+}
+
+.waiting__approve{
+    color: #FF0000;
+    text-align: right;
+}
+
+.form__error{
+    font-size: 14px;
+    color: #FF0000;
+}
+
+.no-border {
+    border-bottom: none !important;
+}
+
+@media (max-width: 1000px) {
+    .detail__inner {
+        width: 700px;
+    }
+}
+
+@media(max-width:800px){
+    .detail__inner{
+        width: 600px;
+    }
+
+    .td__first,.td__second,.td__third{
+        width: 20%;
+    }
+
+    .td__empty {
+        width: 10%;
+    }
+}
+
+
+@media(max-width:650px) {
+    h2 {
+        font-size: 20px;
+    }
+
+    .detail__inner {
+        width: 400px;
+    }
+
+    .detail__table{
+        font-size: 14px;
+    }
+
+    .detail__table input {
+        width: 70px;
+    }
+}
+
+
+
