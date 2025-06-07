@@ -58,45 +58,6 @@
     php artisan storage:link
     ```
 
-## Stripeの設定
-1. APIキーを取得する<br>
-   i. [Stripe公式サイト](https://dashboard.stripe.com/register)でアカウントを作成<br>
-   ii.「開発者」 → 「APIキー」から `公開可能キー` (`STRIPE_KEY`) と `シークレットキー` (`STRIPE_SECRET`) をコピー
-2. 取得したSTRIPEのAPIキーを`.env`に追加<br>
-   ```
-   STRIPE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxx
-   STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxx
-   ```
-3. `config/services.php`にStripeの設定を追加(今回は記載済み)
-   ```
-   'stripe' => [
-    'key' => env('STRIPE_KEY'),
-    'secret' => env('STRIPE_SECRET'),
-    ],
-   ```
-4. PHPコンテナ内にログインする 
-   ```
-   docker-compose exec php bash
-   ```
-5. キャッシュのクリア
-   ```
-   php artisan config:clear
-   php artisan cache:clear
-   php artisan config:cache
-   ```
-6. Stripeのライブラリをインストール
-   ```
-   composer require stripe/stripe-php
-   ```
-7. 商品購入画面にて，支払い方法を選択後，`購入する`ボタンを押す
-8. Stripeのテストカードで支払い
-   ```
-   カード番号: 4242 4242 4242 4242
-   有効期限: 任意の未来日（例: 12/34）
-   CVC: 123
-   ```
->今回はStripeのテスト決済機能を用いています。テスト決済では，即時決済ができるという観点から「カード決済」のみが適用できます。「コンビニ支払い」は即時決済ができないので購入手続きが完了しないことをご了承ください。
-
 ## MailHogの設定
 1. MailHogのインストール
    ```
@@ -124,7 +85,7 @@
    php artisan config:cache
    ```
 5. 会員登録後，`認証はこちらから`というボタンを押すと，MailHogのページに遷移するので，そこで`Verify Email Address`をクリックする
-6. ページ遷移後`Verify Email Address`というボタンを押すと，メール認証が行われて，プロフィール設定画面に遷移する
+6. ページ遷移後`Verify Email Address`というボタンを押すと，メール認証が行われて，勤怠登録画面に遷移する
 ## 単体テストの設定
 1. MySQLコンテナ内にログインする
    ```
@@ -214,22 +175,22 @@
 
 | テスト項目 | テストファイル名| 実行コマンド
 |----------|----------|----------|
-| 認証機能（一般ユーザー）  | RegisterTest  | `php artisan test --filter RegisterTest`|
-| ログイン認証機能（一般ユーザー）  | LoginTest  |`php artisan test --filter LoginTest` |
-| ログイン認証機能（管理者）  | LogoutTest  | `php artisan test --filter LogoutTest`　|
-| 日時取得機能  | IndexTest  |`php artisan test --filter IndexTest` |
-| ステータス確認機能  | MyListTest  | `php artisan test --filter MyListTest`|
-| 出勤機能  | SearchTest  | `php artisan test --filter SearchTest`|
-| 休憩機能  | DetailTest  | `php artisan test --filter DetailTest`|
-| 退勤機能  | GoodTest  | `php artisan test --filter GoodTest`|
-| 勤怠一覧情報取得機能（一般ユーザー）  | CommentTest  | `php artisan test --filter CommentTest`|
-| 勤怠詳細情報取得機能（一般ユーザー）  | PurchaseTest  |`php artisan test --filter PurchaseTest` |
-| 勤怠詳細情報修正機能（一般ユーザー）  | PurchaseMethodTest(Duskを使用)  | 下記参照 |
-| 勤怠一覧情報取得機能（管理者）  | AddressTest  | `php artisan test --filter AddressTest`|
-| 勤怠詳細情報取得・修正機能（管理者）  | MypageTest  | `php artisan test --filter MypageTest`|
-| ユーザー情報取得機能（管理者）  | ChangeProfileTest  | `php artisan test --filter ChangeProfileTest`|
-| 勤怠情報修正機能（管理者）  | SellTest  | `php artisan test --filter SellTest`|
-| メール認証機能  | SellTest  | `php artisan test --filter SellTest`|
+| 認証機能（一般ユーザー）  | RegisterTest  | `php artisan test tests/Feature/RegistreTest.php`|
+| ログイン認証機能（一般ユーザー）  | LoginTest  |`php artisan test tests/Feature/LoginTest.php` |
+| ログイン認証機能（管理者）  | AdminLoginTest  | `php artisan test tests/Feature/AdminLoginTest.php`　|
+| 日時取得機能  | IndexTest(Duskを使用)  |`php artisan dusk tests/Browser/IndexTest.php` |
+| ステータス確認機能  | StatusTest  | `php artisan test tests/Feature/statusTest.php`|
+| 出勤機能  | ClockInTest  | `php artisan test tests/Feature/ClockInTest.php`|
+| 休憩機能  | BreakTest  | `php artisan test tests/Feature/BreakTest.php`|
+| 退勤機能  | ClockOutTest  | `php artisan test tests/Feature/ClockOutTest.php`|
+| 勤怠一覧情報取得機能（一般ユーザー）  | AttendanceListTest  | `php artisan test tests/Feature/AdmainListTest.php`|
+| 勤怠詳細情報取得機能（一般ユーザー）  | DetailTest  |`php artisan test tests/Feature/DetailTest.php` |
+| 勤怠詳細情報修正機能（一般ユーザー）  | CorrectTest  | `php artisan test tests/Feature/CorrectTest.php` |
+| 勤怠一覧情報取得機能（管理者）  | AdminListTest  | `php artisan test tests/Feature/AdminListTest.php`|
+| 勤怠詳細情報取得・修正機能（管理者）  | AdminDetailTest  | `php artisan test tests/Feature/AdminDetailTest.php`|
+| ユーザー情報取得機能（管理者）  | AdminStaffTest  | `php artisan test tests/Feature/AdminStaffTest.php`|
+| 勤怠情報修正機能（管理者）  | AdminCorrectTest  | `php artisan test tests/Feature/AdminCorrectTest.php`|
+| メール認証機能  | VerifyEmailTest <br> VerifyEmailTest(Duskを使用) | `php artisan test tests/Feature/VerifyEmailTest.php` <br> `php artisan dusk tests/Browser/VerifyEmailTest.php`|
 
 
 2. 各項目のテストを実施<br>
