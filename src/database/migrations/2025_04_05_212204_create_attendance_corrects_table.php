@@ -18,7 +18,7 @@ class CreateAttendanceCorrectsTable extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('attendance_id')->constrained()->cascadeOnDelete();
             $table->foreignId('admin_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->enum('approval', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('approval', ['pending', 'approved'])->default('pending');
             $table->text('note');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();

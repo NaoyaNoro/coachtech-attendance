@@ -19,6 +19,7 @@ class VerifyEmailTest extends DuskTestCase
 
     use DatabaseMigrations;
 
+    // メール認証誘導画面で「認証はこちらから」ボタンを押下するとメール認証サイトに遷移する
     public function testVerifyEmailTest()
     {
         $this->browse(function (Browser $browser) {
@@ -38,7 +39,7 @@ class VerifyEmailTest extends DuskTestCase
         });
     }
 
-
+    // メール認証サイトのメール認証を完了すると、勤怠画面に遷移する
     public function testEmailVerificationRedirectsToAttendance()
     {
         Carbon::setTestNow(Carbon::now());

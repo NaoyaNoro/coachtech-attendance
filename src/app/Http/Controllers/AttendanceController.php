@@ -42,9 +42,11 @@ class AttendanceController extends Controller
                 $breaks = BreakTime::where('attendance_id', $attendance->id)->get();
                 $break_sum = 0;
                 foreach ($breaks as $break) {
-                    $start = $break->break_start;
-                    $end = $break->break_end;
-                    if($end){
+                    // $start = $break->break_start;
+                    // $end = $break->break_end;
+                    if($break->break_end){
+                        $start = $break->break_start->copy()->floorMinute();
+                        $end = $break->break_end->copy()->floorMinute();
                         $break_minutes = $end->diffInMinutes($start);
                     }else{
                         $break_minutes=0;
@@ -54,6 +56,7 @@ class AttendanceController extends Controller
                 $hours = floor($break_sum / 60);
                 $minutes = $break_sum % 60;
                 $break_time = sprintf('%02d:%02d', $hours, $minutes);
+
             }else{
                 $break_time=null;
             }
@@ -126,6 +129,8 @@ class AttendanceController extends Controller
 
         $breakAdd = BreakAdd::where('attendance_correct_id', $attendanceCorrectId)->first();
 
-        return view('attendance-detail',compact('userName','clock_in','clock_out','year','day','breaks','attendance_id', 'breakAdd','isUnApproved'));
+        $note=$attendance->note;
+
+        return view('attendance-detail',compact('userName','clock_in','clock_out','year','day','breaks','attendance_id', 'breakAdd','isUnApproved','note'));
     }
 }

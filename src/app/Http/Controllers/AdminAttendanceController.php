@@ -28,9 +28,9 @@ class AdminAttendanceController extends Controller
             $breaks = BreakTime::where('attendance_id', $attendance->id)->get();
             $break_sum = 0;
             foreach ($breaks as $break) {
-                $start = $break->break_start;
-                $end = $break->break_end;
-                if ($end) {
+                if ($break->break_end) {
+                    $start = $break->break_start->copy()->floorMinute();
+                    $end = $break->break_end->copy()->floorMinute();
                     $break_minutes = $end->diffInMinutes($start);
                 } else {
                     $break_minutes = 0;
@@ -99,9 +99,9 @@ class AdminAttendanceController extends Controller
                 $breaks = BreakTime::where('attendance_id', $attendance->id)->get();
                 $break_sum = 0;
                 foreach ($breaks as $break) {
-                    $start = $break->break_start;
-                    $end = $break->break_end;
-                    if ($end) {
+                    if ($break->break_end) {
+                        $start = $break->break_start->copy()->floorMinute();
+                    $end = $break->break_end->copy()->floorMinute();
                         $break_minutes = $end->diffInMinutes($start);
                     } else {
                         $break_minutes = 0;

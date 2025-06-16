@@ -7,7 +7,6 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Attendance;
-use App\Models\BreakTime;
 use Illuminate\Support\Carbon;
 
 class AdminStaffTest extends TestCase
@@ -136,12 +135,15 @@ class AdminStaffTest extends TestCase
         $user = User::factory()->create()->first();
         $attendance = Attendance::create([
             'user_id' => $user->id,
-            'clock_in' => Carbon::parse('2025-05-25 09:00:00'),
-            'clock_out' => Carbon::parse('2025-05-25 17:00:00'),
+            'clock_in' => Carbon::now()->setTime(9, 0, 0),
+            'clock_out' => Carbon::now()->setTime(17, 0, 0),
         ]);
 
+        $year = Carbon::now()->format('Y');
+        $current_month = str_pad(Carbon::now()->format('m'), 2, '0', STR_PAD_LEFT);
+
         $admin = Admin::factory()->create()->first();
-        $response = $this->actingAs($admin, 'admin')->get("/admin/attendance/month/list/{$user->id}?month=2025-05");
+        $response = $this->actingAs($admin, 'admin')->get("/admin/attendance/month/list/{$user->id}?month={$year}-{$current_month}");
         $response->assertStatus(200);
 
         $response->assertSee("詳細");

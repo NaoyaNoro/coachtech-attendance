@@ -191,7 +191,7 @@ use Carbon\Carbon;
                         備考
                     </th>
                     <td colspan="3">
-                        <textarea name="note" rows="5" {{$isUnApproved ? 'readonly' : ''}} {{ old('note',$note ??'') }}></textarea>
+                        <textarea name="note" rows="5" {{$isUnApproved ? 'readonly' : ''}}>{{ old('note',$note ??'') }}</textarea>
 
                         @error("note")
                         <p class="form__error">{{ $message }}</p>

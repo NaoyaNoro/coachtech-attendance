@@ -111,7 +111,7 @@ class AdminListTest extends TestCase
         ]);
     }
 
-    // 「前日」を押下した時に前の日の勤怠情報が表示される
+    // 「翌日」を押下した時に前の日の勤怠情報が表示される
     public function test_tomorrow_all_attendance()
     {
         $user1 = User::factory()->create()->first();

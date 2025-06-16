@@ -84,11 +84,11 @@ use Carbon\Carbon;
                     </td>
                     @php
                     $isAdminView = isset($user);
-                    $hasClockIn = $dayItems[$i]['clock_in'];
+                    $hasClockOut = $dayItems[$i]['clock_out'];
                     $attendanceId = $dayItems[$i]['attendance_id'];
                     @endphp
                     <td>
-                        @if($hasClockIn)
+                        @if($hasClockOut)
                         @if($isAdminView)
                         <a class="attendnace__detail" href="/admin/attendance/{{ $attendanceId }}">詳細</a>
                         @else

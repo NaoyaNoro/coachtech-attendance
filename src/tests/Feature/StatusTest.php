@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Status;
@@ -16,20 +15,16 @@ class StatusTest extends TestCase
     // 勤務外の場合、勤怠ステータスが正しく表示される
     public function test_status_is_displayed_as_before_working()
     {
-        // 1. ユーザー作成
         $user = User::factory()->create()->first();
-
         $response = $this->actingAs($user)->get('/');
-
         $response->assertStatus(200);
-        $response->assertSee('勤務外'); // Blade上に存在することを確認
+        $response->assertSee('勤務外');
     }
 
     // 出勤中の場合、勤怠ステータスが正しく表示される
     public function test_status_is_displayed_as_working()
     {
         $user = User::factory()->create()->first();
-
         Status::create([
             'user_id' => $user->id,
             'status' => 'working',
@@ -47,10 +42,9 @@ class StatusTest extends TestCase
     }
 
     // 休憩中の場合、勤怠ステータスが正しく表示される
-    public function test_status_is_displayed_as_after_working()
+    public function test_status_is_displayed_as_breaking()
     {
         $user = User::factory()->create()->first();
-
         Status::create([
             'user_id' => $user->id,
             'status' => 'breaking',
@@ -68,10 +62,9 @@ class StatusTest extends TestCase
     }
 
     // 退勤済の場合、勤怠ステータスが正しく表示される
-    public function test_status_is_displayed_as_breaking()
+    public function test_status_is_displayed_as_after_working()
     {
         $user = User::factory()->create()->first();
-
         Status::create([
             'user_id' => $user->id,
             'status' => 'after_working',

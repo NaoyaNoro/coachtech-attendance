@@ -88,7 +88,7 @@ Route::middleware('auth:admin')->group(function(){
     Route::get('/admin/attendance/{id}', [AdminCorrectController::class, 'attendance_detail']);
 
     //申請に関するルート
-    Route::post('admin/attendance/correct', [AdminCorrectController::class, 'admin_coorect']);
+    Route::post('admin/attendance/correct', [AdminCorrectController::class, 'admin_correct']);
 
     //承認に関するルート
     Route::get('/stamp_correction_request/approve/{attendance_correct_request}',[AdminApproveController::class,'confirm_approval']);

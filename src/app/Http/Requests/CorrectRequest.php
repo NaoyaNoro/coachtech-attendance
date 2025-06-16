@@ -74,6 +74,7 @@ class CorrectRequest extends FormRequest
 
                 if ($clockIn->greaterThan($clockOut)) {
                     $validator->errors()->add('clock_in', '出勤時間もしくは退勤時間が不適切な値です');
+                    return;
                 }
 
                 if (is_array($breakStarts) && is_array($breakEnds)) {

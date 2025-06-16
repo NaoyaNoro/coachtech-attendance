@@ -6,8 +6,8 @@ use App\Http\Requests\CorrectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Attendance;
+use App\Models\AttendanceCorrect;
 use App\Models\BreakTime;
-use App\Models\User;
 
 
 class AdminCorrectController extends Controller
@@ -28,10 +28,14 @@ class AdminCorrectController extends Controller
         $clock_out = $attendance ? $attendance->clock_out : '';
         $breaks = $attendance ? BreakTime::where('attendance_id', $attendance->id)->get() : '';
 
-        return view('admin.attendance-detail',compact('attendance_id','userName','carbon','year','day','clock_in','clock_out','breaks'));
+        $note=$attendance->note;
+
+        $isAttendanceCorrect=AttendanceCorrect::where('attendance_id', $attendance_id)->exists();
+
+        return view('admin.attendance-detail',compact('attendance_id','userName','carbon','year','day','clock_in','clock_out','breaks','note','isAttendanceCorrect'));
     }
 
-    public function admin_coorect(CorrectRequest $request)
+    public function admin_correct(CorrectRequest $request)
     {
         $attendance = Attendance::find($request->attendance_id);
 
@@ -91,6 +95,10 @@ class AdminCorrectController extends Controller
                 'break_end' => $add_end,
             ]);
         }
+
+        $attendance->update([
+            'note'=>$request->note,
+        ]);
 
         return redirect('/admin/attendance/month/list/'.$attendance->user_id);
     }

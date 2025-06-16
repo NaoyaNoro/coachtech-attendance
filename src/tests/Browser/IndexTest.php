@@ -21,7 +21,6 @@ class IndexTest extends DuskTestCase
         $this->browse(function (Browser $browser)  use ($user) {
             $browser->loginAs($user)->visit('/')
                 ->pause(1000)
-                ->screenshot('check-time-display')
                 ->assertSeeIn('@date-display', now()->format('Y年n月j日'))
                 ->assertSeeIn('@time-display', now()->format('H:i'));
         });

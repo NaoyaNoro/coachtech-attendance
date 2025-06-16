@@ -84,8 +84,8 @@ class AdminDetailTest extends TestCase
 
         BreakTime::create([
             'attendance_id' => $attendance->id,
-            'break_start' => Carbon::parse('2025-05-25 12:00:00'),
-            'break_end' => Carbon::parse('2025-05-25 13:00:00'),
+            'break_start' => Carbon::now()->setTime(12, 0, 0),
+            'break_end' => Carbon::now()->setTime(13, 0, 0),
         ]);
 
         $admin = Admin::factory()->create()->first();
@@ -123,8 +123,8 @@ class AdminDetailTest extends TestCase
 
         BreakTime::create([
             'attendance_id' => $attendance->id,
-            'break_start' => Carbon::parse('2025-05-25 12:00:00'),
-            'break_end' => Carbon::parse('2025-05-25 13:00:00'),
+            'break_start' => Carbon::now()->setTime(12, 0, 0),
+            'break_end' => Carbon::now()->setTime(13, 0, 0),
         ]);
 
         $admin = Admin::factory()->create()->first();
@@ -162,8 +162,8 @@ class AdminDetailTest extends TestCase
 
         BreakTime::create([
             'attendance_id' => $attendance->id,
-            'break_start' => Carbon::parse('2025-05-25 12:00:00'),
-            'break_end' => Carbon::parse('2025-05-25 13:00:00'),
+            'break_start' => Carbon::now()->setTime(12, 0, 0),
+            'break_end' => Carbon::now()->setTime(13, 0, 0),
         ]);
 
         $admin = Admin::factory()->create()->first();
@@ -180,7 +180,7 @@ class AdminDetailTest extends TestCase
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             $commentError = $e->errors()['note'][0];
-            $this->assertEquals('備考を入力してください', $commentError);
+            $this->assertEquals('備考を記入してください', $commentError);
             throw $e;
         }
     }

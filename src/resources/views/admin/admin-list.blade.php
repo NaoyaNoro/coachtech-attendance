@@ -60,9 +60,11 @@
                         {{ $dayItem['working_time'] }}
                     </td>
                     <td>
+                        @if($dayItem['clock_out'])
                         <a href="/admin/attendance/{{$dayItem['attendance_id'] }}" class="detail__button">
                             詳細
                         </a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

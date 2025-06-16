@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Notification;
-use App\Models\User;
 
 class RegisterTest extends TestCase
 {
@@ -121,7 +120,7 @@ class RegisterTest extends TestCase
         }
     }
 
-    // 全ての項目が入力されている場合、会員情報が登録され、メール認証画面に遷移する
+    // フォームに内容が入力されていた場合、データが正常に保存される
     public function test_register_new_user()
     {
         $this->withoutExceptionHandling();

@@ -9,8 +9,6 @@ use App\Models\Admin;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\AttendanceCorrect;
-use App\Models\breakCorrect;
-use App\Models\ClockOutCorrect;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +40,7 @@ class AdminCorrectTest extends TestCase
             'clock_out' => '18:00',
             'break_start' => ['13:00'],
             'break_end' => ['14:00'],
-            'note' => 'テスト'
+            'note' => 'テスト1'
         ]);
 
         $user2 = $users[1];
@@ -78,14 +76,14 @@ class AdminCorrectTest extends TestCase
             "承認待ち",
             "{$user1->name}",
             Carbon::today()->format('Y/m/d'),
-            "テスト",
+            "テスト1",
             Carbon::today()->format('Y/m/d'),
             "詳細",
 
             "承認待ち",
             "{$user2->name}",
             Carbon::yesterday()->format('Y/m/d'),
-            "テスト",
+            "テスト2",
             Carbon::today()->format('Y/m/d'),
             "詳細",
         ]);
@@ -138,8 +136,6 @@ class AdminCorrectTest extends TestCase
         ]);
 
         $this->actingAs($user2)->post('attendance/correct', [
-            'admin_id' => $admin->id,
-            'approval' => 'approved',
             'attendance_id' => $attendance2->id,
             'break_id' => [$break2->id],
             'clock_in' => '08:00',
@@ -255,8 +251,6 @@ class AdminCorrectTest extends TestCase
             'attendance_id' => $attendance->id,
             'break_id' => [$break->id],
         ]);
-
-        Auth::guard('admin')->logout();
 
         $response=$this->actingAs($admin, 'admin')->get("/admin/attendance/{$attendance->id}");
 
