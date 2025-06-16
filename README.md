@@ -5,7 +5,7 @@
 ## Dockerビルド
 1. リポジトリの複製
    ```
-   git clone git@github.com:NaoyaNoro/coachtech-market.git
+   git clone git@github.com:NaoyaNoro/coachtech-attendance.git
    ```
 3. DockerDesktopアプリを立ち上げる
 4. dockerをビルドする<br>
