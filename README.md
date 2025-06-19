@@ -58,6 +58,23 @@
     php artisan storage:link
     ```
 
+## シーディング情報
+* Admin(管理者)に関するログイン情報
+1. http://localhost/admin/login にアクセスする
+2. メールアドレス：`boss@sample.com`<br>
+   パスワード：`boss0000`<br>
+   を入力
+3. 「管理者ログインする」を押す
+
+* user(一般user)に関するログイン情報
+1. http://localhost/login にアクセスする
+2. メールアドレス：`user1@sample.com`<br>
+   パスワード：`user10000`<br>
+   または<br>
+   メールアドレス：`user2@sample.com`<br>
+   パスワード：`user20000`<br>
+3. 「ログインする」を押す
+
 ## MailHogの設定
 1. MailHogのインストール
    ```
@@ -86,6 +103,7 @@
    ```
 5. 会員登録後，`認証はこちらから`というボタンを押すと，MailHogのページに遷移するので，そこで`Verify Email Address`をクリックする
 6. ページ遷移後`Verify Email Address`というボタンを押すと，メール認証が行われて，勤怠登録画面に遷移する
+
 ## 単体テストの設定
 1. MySQLコンテナ内にログインする
    ```
@@ -324,7 +342,6 @@
 * php 7.4.9
 * Laravel 8.83.8
 * MySQL 8.0.26
-* Stripe  v16.6.0
 * MailHog 1.0.1
 * Dusk v6.25.2
 
