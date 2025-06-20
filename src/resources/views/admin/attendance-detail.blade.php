@@ -202,7 +202,7 @@ use Carbon\Carbon;
             <input type="hidden" value="{{$attendance_id}}" name="attendance_id">
 
             @if($isAttendanceCorrect)
-            <p class="waiting__approve">*申請中の勤怠のため修正できません。</p>
+            <p class="waiting__approve">*申請中の勤怠のため修正はできません。</p>
             @else
             <button class="correct__button" type="submit">
                 修正

@@ -201,7 +201,7 @@ use Carbon\Carbon;
             </table>
             <input type="hidden" value="{{$attendance_id}}" name="attendance_id">
             @if($isUnApproved)
-            <p class="waiting__approve">*承認待ちのため修正できません。</p>
+            <p class="waiting__approve">*承認待ちのため修正はできません。</p>
             @else
             <button class="correct__button" type="submit">
                 修正
