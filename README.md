@@ -353,7 +353,8 @@
 * Dusk v6.25.2
 
 ## ER図
-![ER図(attendance-coachtech)](https://github.com/user-attachments/assets/280f1c8e-209d-46c5-b469-c60589485de7)
+![er(attendance)](https://github.com/user-attachments/assets/782121d8-c7f8-47db-86c1-aa85ce710cb7)
+
 
 
 
