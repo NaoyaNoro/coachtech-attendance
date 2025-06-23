@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\AttendanceCorrect;
-use App\Models\User;
-use App\Models\Status;
 use App\Models\BreakTime;
 use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
@@ -14,7 +12,6 @@ use App\Models\ClockInCorrect;
 use App\Models\ClockOutCorrect;
 use App\Models\BreakCorrect;
 use App\Models\BreakAdd;
-use Illuminate\Support\Facades\App;
 
 class AttendanceController extends Controller
 {
@@ -93,6 +90,8 @@ class AttendanceController extends Controller
 
         $isUnApproved=AttendanceCorrect::where('attendance_id', $attendance->id)->where('approval','pending')->exists();
 
+        $isApproved = AttendanceCorrect::where('attendance_id', $attendance->id)->where('approval', 'approved')->exists();
+
         $userName= auth()->user()->name;
         $carbon = Carbon::parse($attendance['clock_in']);
         $year = $carbon->format('Y') . '年';
@@ -101,13 +100,9 @@ class AttendanceController extends Controller
         $attendanceCorrectId = null;
         if($isUnApproved){
             $attendanceCorrectId=AttendanceCorrect::where('attendance_id', $attendance->id)->where('approval','pending')->value('id');
+        }elseif($isApproved){
+            $attendanceCorrectId = AttendanceCorrect::where('attendance_id', $attendance->id)->where('approval', 'approved')->value('id');
         }
-
-
-        // $clockIn = $attendanceCorrectId
-        //     ? ClockInCorrect::where('attendance_correct_id', $attendanceCorrectId)->first()
-        //     : null;
-        // $clock_in = $clockIn ? Carbon::parse($clockIn->requested_time) : $attendance->clock_in;
 
         $clockIn = ClockInCorrect::where('attendance_correct_id', $attendanceCorrectId)->first();
         $clock_in = $clockIn ? Carbon::parse($clockIn->requested_time) : $attendance->clock_in;
@@ -129,8 +124,12 @@ class AttendanceController extends Controller
 
         $breakAdd = BreakAdd::where('attendance_correct_id', $attendanceCorrectId)->first();
 
+        $noteCorrect = null;
+        if($attendanceCorrectId){
+            $noteCorrect=AttendanceCorrect::find($attendanceCorrectId)->note;
+        }
         $note=$attendance->note;
 
-        return view('attendance-detail',compact('userName','clock_in','clock_out','year','day','breaks','attendance_id', 'breakAdd','isUnApproved','note'));
+        return view('attendance-detail',compact('userName','clock_in','clock_out','year','day','breaks','attendance_id', 'breakAdd','isUnApproved', 'isApproved','note','noteCorrect'));
     }
 }

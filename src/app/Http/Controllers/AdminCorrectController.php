@@ -30,9 +30,11 @@ class AdminCorrectController extends Controller
 
         $note=$attendance->note;
 
-        $isAttendanceCorrect=AttendanceCorrect::where('attendance_id', $attendance_id)->exists();
+        $isUnApproved=AttendanceCorrect::where('attendance_id', $attendance_id)->where('approval','pending')->exists();
 
-        return view('admin.attendance-detail',compact('attendance_id','userName','carbon','year','day','clock_in','clock_out','breaks','note','isAttendanceCorrect'));
+        $isApproved = AttendanceCorrect::where('attendance_id', $attendance_id)->where('approval', 'approved')->exists();
+
+        return view('admin.attendance-detail',compact('attendance_id','userName','carbon','year','day','clock_in','clock_out','breaks','note', 'isUnApproved', 'isApproved'));
     }
 
     public function admin_correct(CorrectRequest $request)

@@ -58,13 +58,13 @@ use Carbon\Carbon;
                         出勤・退勤
                     </th>
                     <td class="td__first">
-                        <input type="text" name="clock_in" value="{{ $clock_in ? Carbon::parse($clock_in)->format('H:i') : '' }}" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="clock_in" value="{{ $clock_in ? Carbon::parse($clock_in)->format('H:i') : '' }}" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__second">
                         〜
                     </td>
                     <td class="td__third">
-                        <input type="text" name="clock_out" value="{{ $clock_out ? Carbon::parse($clock_out)->format('H:i') : '' }}" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="clock_out" value="{{ $clock_out ? Carbon::parse($clock_out)->format('H:i') : '' }}" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__empty">
 
@@ -97,13 +97,13 @@ use Carbon\Carbon;
                         休憩{{ $loop->iteration }}
                     </th>
                     <td class="td__first">
-                        <input type="text" name="break_start[]" value="{{ $break['break_start'] ? Carbon::parse($break['break_start'])->format('H:i') : ''}}" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="break_start[]" value="{{ $break['break_start'] ? Carbon::parse($break['break_start'])->format('H:i') : ''}}" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__second">
                         〜
                     </td>
                     <td class="td__third">
-                        <input type="text" name="break_end[]" value="{{$break['break_end'] ? Carbon::parse($break['break_end'])->format('H:i') : ''}}" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="break_end[]" value="{{$break['break_end'] ? Carbon::parse($break['break_end'])->format('H:i') : ''}}" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                         <input type="hidden" name="break_id[]" value="{{$break['id']}}">
                     </td>
                     <td class="td__empty">
@@ -136,13 +136,13 @@ use Carbon\Carbon;
                         休憩{{ count($breaks)+1 }}
                     </th>
                     <td class="td__first">
-                        <input type="text" name="break_start_add" value="" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="break_start_add" value="" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__second">
                         〜
                     </td>
                     <td class="td__third">
-                        <input type="text" name="break_end_add" value="" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="break_end_add" value="" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__empty">
 
@@ -174,13 +174,13 @@ use Carbon\Carbon;
                         休憩1
                     </th>
                     <td class="td__first">
-                        <input type="text" name="break_start" value="" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="break_start" value="" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__second">
                         〜
                     </td>
                     <td class="td__third">
-                        <input type="text" name="break_end" value="" {{$isAttendanceCorrect ? 'readonly' : ''}}>
+                        <input type="text" name="break_end" value="" {{$isUnApproved ||$isApproved  ? 'readonly' : ''}}>
                     </td>
                     <td class="td__empty">
 
@@ -192,7 +192,7 @@ use Carbon\Carbon;
                         備考
                     </th>
                     <td colspan="3">
-                        <textarea name="note" rows="5" {{$isAttendanceCorrect ? 'readonly' : ''}}>{{ old('note',$note ??'') }}</textarea>
+                        <textarea name="note" rows="5" {{$isUnApproved ||$isApproved ? 'readonly' : ''}}>{{ old('note',$note ??'') }}</textarea>
                         @error("note")
                         <p class="form__error">{{ $message }}</p>
                         @enderror
@@ -201,8 +201,12 @@ use Carbon\Carbon;
             </table>
             <input type="hidden" value="{{$attendance_id}}" name="attendance_id">
 
-            @if($isAttendanceCorrect)
+            @if($isUnApproved)
             <p class="waiting__approve">*申請中の勤怠のため修正はできません。</p>
+            @elseif($isApproved)
+            <button class="correct__button approve" type="submit" disabled>
+                承認済み
+            </button>
             @else
             <button class="correct__button" type="submit">
                 修正
