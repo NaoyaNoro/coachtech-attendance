@@ -13,7 +13,7 @@ use Carbon\Carbon;
 <div class="detail__content">
     <div class="detail__inner">
         <div class="detail__ttl">
-            <h2>詳細画面</h2>
+            <h2>勤怠詳細</h2>
         </div>
         <form action="/attendance/correct" class="correct__attendance" method="post">
             @csrf

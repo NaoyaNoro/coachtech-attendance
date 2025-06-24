@@ -9,7 +9,7 @@
 <div class="attendance-list__contents">
     <div class="list__inner">
         <div class="list__ttl">
-            <h2>{{$displayDay}}の勤怠</h2>
+            <h2>{{$titleDay}}の勤怠</h2>
         </div>
         <div class="list__day">
             <a href="{{ route('admin.attendance.list', ['day' => $prevDay]) }}" class="prev__day">← 前日</a>

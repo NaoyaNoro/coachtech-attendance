@@ -17,6 +17,8 @@ class AdminAttendanceController extends Controller
     {
         $day = $request->query('day', Carbon::now()->format('Y-m-d'));
         $displayDay = Carbon::createFromFormat('Y-m-d', $day)->format('Y/m/d');
+        $titleDay= Carbon::createFromFormat('Y-m-d', $day)->format('Y年n月j日');
+
         $prevDay = Carbon::createFromFormat('Y-m-d', $day)->subDay()->format('Y-m-d');
         $nextDay = Carbon::createFromFormat('Y-m-d', $day)->addDay()->format('Y-m-d');
 
@@ -62,7 +64,7 @@ class AdminAttendanceController extends Controller
                 'attendance_id'=>$attendance->id,
             ];
         }
-        return view('admin.admin-list',compact('displayDay', 'prevDay','nextDay','dayItems'));
+        return view('admin.admin-list',compact('displayDay','titleDay', 'prevDay','nextDay','dayItems'));
     }
 
     //管理者のスタッフ一覧の表示
