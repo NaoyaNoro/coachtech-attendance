@@ -357,7 +357,8 @@
 * Dusk v6.25.2
 
 ## ER図
-![er(attendance)](https://github.com/user-attachments/assets/782121d8-c7f8-47db-86c1-aa85ce710cb7)
+![er(attendance)](https://github.com/user-attachments/assets/5ddad4fc-e2d2-464c-bcdd-45f7ff7af8a4)
+
 
 
 
